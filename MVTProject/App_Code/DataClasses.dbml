@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="DizitalBazarDB" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=ANKIT-PC\SQLEXPRESS;Initial Catalog=DizitalBazarDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DigitalBazarConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.tbl_MainCategory" Member="tbl_MainCategories">
+    <Type Name="tbl_MainCategory">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Catname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[desc]" Member="desc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="dateon" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="tbl_MainCategory_tbl_SubCategory" Member="tbl_SubCategories" ThisKey="Id" OtherKey="pid" Type="tbl_SubCategory" />
+      <Association Name="tbl_MainCategory_tbl_Product" Member="tbl_Products" ThisKey="Id" OtherKey="pid" Type="tbl_Product" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_SubCategory" Member="tbl_SubCategories">
+    <Type Name="tbl_SubCategory">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Scatname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[desc]" Member="desc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="pid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dateon" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="tbl_SubCategory_tbl_Product" Member="tbl_Products" ThisKey="Id" OtherKey="sid" Type="tbl_Product" />
+      <Association Name="tbl_MainCategory_tbl_SubCategory" Member="tbl_MainCategory" ThisKey="pid" OtherKey="Id" Type="tbl_MainCategory" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_Product" Member="tbl_Products">
+    <Type Name="tbl_Product">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="pname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[desc]" Member="desc" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="qty" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="size" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="color" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="material" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="imgthumb" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="imgfront" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="imgback" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="pid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="sid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dateon" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="tbl_Product_tbl_ShoppingCart" Member="tbl_ShoppingCarts" ThisKey="Id" OtherKey="ProductID" Type="tbl_ShoppingCart" />
+      <Association Name="tbl_MainCategory_tbl_Product" Member="tbl_MainCategory" ThisKey="pid" OtherKey="Id" Type="tbl_MainCategory" IsForeignKey="true" />
+      <Association Name="tbl_SubCategory_tbl_Product" Member="tbl_SubCategory" ThisKey="sid" OtherKey="Id" Type="tbl_SubCategory" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_ShoppingCart" Member="tbl_ShoppingCarts">
+    <Type Name="tbl_ShoppingCart">
+      <Column Name="CartID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ProductID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SessionID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Price" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="DateAdded" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Association Name="tbl_Product_tbl_ShoppingCart" Member="tbl_Product" ThisKey="ProductID" OtherKey="Id" Type="tbl_Product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tbl_UserProfile" Member="tbl_UserProfiles">
+    <Type Name="tbl_UserProfile">
+      <Column Name="Uid" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="firstname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="lastname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="gender" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="state" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="pincode" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="deliveryaddress" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="mobile" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.showProduct" Method="showProduct">
+    <ElementType Name="showProductResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Catname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[desc]" Member="desc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="dateon" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Id1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Scatname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="desc1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="pid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dateon1" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Id2" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="pname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="desc2" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="qty" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="size" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="color" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="material" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="imgthumb" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="imgfront" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="imgback" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="pid1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="sid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dateon2" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.product_list" Method="product_list">
+    <Parameter Name="pcat" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="scat" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="choice" Type="System.Int32" DbType="Int" />
+    <ElementType Name="product_listResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Catname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[desc]" Member="desc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="dateon" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Id1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Scatname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="desc1" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="pid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dateon1" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="Id2" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="pname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="desc2" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="qty" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="size" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="color" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="material" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="imgthumb" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="imgfront" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="imgback" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="pid1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="sid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dateon2" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.Shop_Cart_View" Method="Shop_Cart_View">
+    <Parameter Name="sessionId" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="choice" Type="System.Int32" DbType="Int" />
+    <ElementType Name="Shop_Cart_ViewResult">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="pname" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="[desc]" Member="desc" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="price" Type="System.Decimal" DbType="Decimal(18,2)" CanBeNull="true" />
+      <Column Name="qty" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="size" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="color" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="material" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="imgthumb" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="imgfront" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="imgback" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="pid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="sid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="dateon" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="CartID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ProductID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="SessionID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Price1" Type="System.Decimal" DbType="Decimal(18,0)" CanBeNull="true" />
+      <Column Name="DateAdded" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>
